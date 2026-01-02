@@ -1,0 +1,57 @@
+# lazystack configuration file
+# Copy this to ~/.config/lazystack/config.yaml or /etc/lazystack/config.yaml
+
+systemd:
+  # List of systemd units to watch/monitor
+  units_to_watch:
+    - postgresql.service
+    - nginx.service
+    - redis.service
+    - docker.service
+
+  # Auto-refresh interval for systemd services
+  auto_refresh_interval: 5s
+
+kubernetes:
+  # Path to kubeconfig file (defaults to ~/.kube/config)
+  kubeconfig: ~/.kube/config
+
+  # Default Kubernetes context to use
+  default_context: k3s-default
+
+  # Default namespace to show
+  default_namespace: default
+
+  # Auto-refresh interval for k8s resources
+  auto_refresh_interval: 3s
+
+ui:
+  # UI theme (options: default, monokai, dracula)
+  theme: default
+
+  # Enable vim-style keybindings
+  vim_mode: true
+
+  # Split ratio between systemd and k8s panes (0.5 = 50/50)
+  split_ratio: 0.5
+
+# Port-forward presets for quick access
+port_forwards:
+  presets:
+    - name: "PostgreSQL"
+      namespace: default
+      pod_selector: "app=postgresql"
+      local_port: 5432
+      remote_port: 5432
+
+    - name: "Redis"
+      namespace: default
+      pod_selector: "app=redis"
+      local_port: 6379
+      remote_port: 6379
+
+    - name: "Web App"
+      namespace: default
+      pod_selector: "app=webapp"
+      local_port: 8080
+      remote_port: 80
